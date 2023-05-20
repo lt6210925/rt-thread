@@ -379,7 +379,7 @@ jobs:
           source ~/.env/env.sh
           failed=0
           count=0
-          echo ${{ github.event.inputs.xpm_install_options }}
+          echo ${{ github.event.inputs.bsp_options }}
           for bsp in $(echo $SRTT_BSP | tr ',' '\n'); do
             count=$((count+1))
             echo "::group::Compiling BSP: ==$count=== $bsp ===="
