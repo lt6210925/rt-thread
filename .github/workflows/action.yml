@@ -120,10 +120,6 @@ jobs:
         shell: bash
         run: |
           source ~/.env/env.sh
-          failed=0
-          count=0
           echo ${{ github.event.inputs.bsp_sub }}
           pushd bsp/${{ github.event.inputs.bsp_sub }} && pkgs --update && popd
           scons -C bsp/${{ github.event.inputs.bsp_sub }} -j$(nproc) 
-          done
-          exit $failed
