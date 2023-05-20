@@ -369,7 +369,7 @@ jobs:
           echo "RTT_EXEC_PATH=/opt/xpack-riscv-none-embed-gcc-8.3.0-2.3/bin" >> $GITHUB_ENV
 
       - name: Bsp Scons Compile
-        if: ${{ matrix.legs.SUB_RTT_BSP == ${{ github.event.inputs.xpm_install_options }} }}
+        #if: ${{ matrix.legs.SUB_RTT_BSP == ${{ github.event.inputs.xpm_install_options }} }}
         shell: bash
         env:
           RTT_BSP: ${{ matrix.legs.RTT_BSP }}
@@ -379,6 +379,7 @@ jobs:
           source ~/.env/env.sh
           failed=0
           count=0
+          echo ${{ github.event.inputs.xpm_install_options }}
           for bsp in $(echo $SRTT_BSP | tr ',' '\n'); do
             count=$((count+1))
             echo "::group::Compiling BSP: ==$count=== $bsp ===="
