@@ -131,4 +131,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: artifacts_export
-          path: ${{ github.workspace }}/rt-thread/bsp/${{ github.event.inputs.bsp_options }}/dist/project.zip
+          path: ${{ github.workspace }}/bsp/${{ github.event.inputs.bsp_options }}/dist/project.zip
