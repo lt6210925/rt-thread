@@ -121,5 +121,9 @@ jobs:
         run: |
           source ~/.env/env.sh
           echo ${{ github.event.inputs.bsp_options }}
+          ls bsp/${{ github.event.inputs.bsp_options }}/Kconfig && scons -C bsp/${{ github.event.inputs.bsp_options }} --pyconfig-silent
           pushd bsp/${{ github.event.inputs.bsp_options }} && pkgs --update && popd
           scons -C bsp/${{ github.event.inputs.bsp_options }} -j$(nproc) 
+          scons --dist -C bsp/${{ github.event.inputs.bsp_options }}
+          ls bsp/${{ github.event.inputs.bsp_options }}/dist
+          
