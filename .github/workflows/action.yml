@@ -120,6 +120,6 @@ jobs:
         shell: bash
         run: |
           source ~/.env/env.sh
-          echo ${{ github.event.inputs.bsp_sub }}
-          pushd bsp/${{ github.event.inputs.bsp_sub }} && pkgs --update && popd
-          scons -C bsp/${{ github.event.inputs.bsp_sub }} -j$(nproc) 
+          echo ${{ github.event.inputs.bsp_options }}
+          pushd bsp/${{ github.event.inputs.bsp_options }} && pkgs --update && popd
+          scons -C bsp/${{ github.event.inputs.bsp_options }} -j$(nproc) 
