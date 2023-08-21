@@ -14,7 +14,7 @@
 
 #include <armv8.h>
 #include "interrupt.h"
-#include "mm_fault.h"
+#include "mm_aspace.h"
 
 #include <backtrace.h>
 
@@ -82,6 +82,8 @@ int check_user_stack(unsigned long esr, struct rt_hw_exp_stack *regs)
     ec = (unsigned char)((esr >> 26) & 0x3fU);
     enum rt_mm_fault_op fault_op;
     enum rt_mm_fault_type fault_type;
+    struct rt_lwp *lwp;
+
     switch (ec)
     {
     case 0x20:
@@ -107,7 +109,9 @@ int check_user_stack(unsigned long esr, struct rt_hw_exp_stack *regs)
             .fault_type = fault_type,
             .fault_vaddr = dfar,
         };
-        if (rt_aspace_fault_try_fix(&msg))
+        lwp = lwp_self();
+        RT_ASSERT(lwp);
+        if (rt_aspace_fault_try_fix(lwp->aspace, &msg))
         {
             ret = 1;
         }
@@ -296,6 +300,19 @@ void rt_hw_trap_exception(struct rt_hw_exp_stack *regs)
 #ifdef RT_USING_FINSH
     list_thread();
 #endif
+
+#ifdef RT_USING_LWP
+    {
+        rt_thread_t th;
+
+        th = rt_thread_self();
+        if (th && th->lwp)
+        {
+            rt_backtrace_user_thread(th);
+        }
+    }
+#endif
+
     backtrace((unsigned long)regs->pc, (unsigned long)regs->x30, (unsigned long)regs->x29);
     rt_hw_cpu_shutdown();
 }
