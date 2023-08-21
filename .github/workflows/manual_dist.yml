@@ -63,8 +63,8 @@ jobs:
           RTT_TOOL_CHAIN: ${{ github.event.inputs.bsp_tool_chain}}
           RTT_BSP_CONFIG: ${{ github.event.inputs.bsp_config}}
         run: |
-          var=$RTT_BSP_CONFIG
-          prefix=${var%%=*}
+          config=${{ github.event.inputs.bsp_config}}
+          preconfig=${config%%=*}
           echo "$prefix"
           
           pwd
