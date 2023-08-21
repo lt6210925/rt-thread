@@ -65,7 +65,7 @@ jobs:
         run: |
           config=${{ github.event.inputs.bsp_config}}
           preconfig=${config%%=*}
-          echo "$prefix"
+          echo "$preconfig"
           
           pwd
 
